@@ -13,14 +13,14 @@ DATA_DIR = 'data'
 CACHE_DIR = 'cache'
 os.makedirs(CACHE_DIR, exist_ok=True)
 
-# File Paths
 COMPS_TSV = os.path.join(DATA_DIR, 'WCA_export_competitions.tsv')
 COUNTRIES_TSV = os.path.join(DATA_DIR, 'WCA_export_countries.tsv')
 RESULTS_TSV = os.path.join(DATA_DIR, 'WCA_export_results.tsv')
 
-# Binary Cache Paths - UPDATED EXTENSIONS
-COMPS_CACHE = os.path.join(CACHE_DIR, 'comps.msgpack')
-COUNTRIES_CACHE = os.path.join(CACHE_DIR, 'countries.msgpack')
+# Using .mp as requested
+COMPS_CACHE = os.path.join(CACHE_DIR, 'comps.mp')
+COUNTRIES_CACHE = os.path.join(CACHE_DIR, 'countries.mp')
+RESULTS_CACHE = os.path.join(CACHE_DIR, 'results.mp')
 
 EVENT_NAMES = {
     "333": "3x3 Cube", "222": "2x2 Cube", "444": "4x4 Cube", "555": "5x5 Cube",
@@ -33,7 +33,7 @@ EVENT_NAMES = {
 }
 
 def pre_cache_data():
-    """Converts heavy TSVs to binary MessagePack locally."""
+    """Converts heavy TSVs to tiny aggregated binary files."""
     if not os.path.exists(COMPS_CACHE) and os.path.exists(COMPS_TSV):
         df = pl.read_csv(COMPS_TSV, separator='\t', quote_char=None, ignore_errors=True)
         df = df.select(['id', 'name', 'country_id', 'year', 'month', 'day'])
@@ -47,6 +47,26 @@ def pre_cache_data():
         with open(COUNTRIES_CACHE, 'wb') as f:
             f.write(msgpack.packb(data))
 
+    # Aggressive Thinning: Pre-summarize results per competition
+    if not os.path.exists(RESULTS_CACHE) and os.path.exists(RESULTS_TSV):
+        print("Creating lightweight results summary...")
+        df = pl.read_csv(RESULTS_TSV, separator='\t', quote_char=None, ignore_errors=True)
+        
+        # 1. Rounds and counts per event
+        summary = df.group_by(['competition_id', 'event_id']).agg([
+            pl.col('round_type_id').n_unique().alias('r'),
+            pl.col('person_id').n_unique().alias('c')
+        ])
+        
+        # 2. Total unique people per competition
+        totals = df.group_by('competition_id').agg(
+            pl.col('person_id').n_unique().alias('total_c')
+        )
+        
+        cache_data = {"stats": summary.to_dicts(), "totals": totals.to_dicts()}
+        with open(RESULTS_CACHE, 'wb') as f:
+            f.write(msgpack.packb(cache_data))
+
 def load_cache(path):
     if not os.path.exists(path): return []
     with open(path, 'rb') as f:
@@ -56,11 +76,11 @@ def get_filtered_data(country, start_date_str, end_date_str):
     try:
         start_dt = datetime.strptime(start_date_str, '%Y-%m-%d')
         end_dt = datetime.strptime(end_date_str, '%Y-%m-%d')
-    except:
-        return [], 0, {}
+    except: return [], 0, {}
 
-    comps = pl.DataFrame(load_cache(COMPS_CACHE))
-    if comps.is_empty(): return [], 0, {}
+    comps_data = load_cache(COMPS_CACHE)
+    if not comps_data: return [], 0, {}
+    comps = pl.DataFrame(comps_data)
 
     filtered_comps = comps.filter(
         (pl.col('country_id') == country) &
@@ -70,34 +90,33 @@ def get_filtered_data(country, start_date_str, end_date_str):
 
     if filtered_comps.is_empty(): return [], 0, {}
 
+    full_res_cache = load_cache(RESULTS_CACHE)
+    if not full_res_cache: return [], 0, {}
+    
+    stats_df = pl.DataFrame(full_res_cache['stats'])
+    totals_df = pl.DataFrame(full_res_cache['totals'])
+
     report, total_rounds, global_event_counts = [], 0, {}
     
-    if os.path.exists(RESULTS_TSV):
-        results = pl.scan_csv(RESULTS_TSV, separator='\t', quote_char=None, ignore_errors=True).filter(
-            pl.col('competition_id').is_in(filtered_comps['id'].to_list())
-        ).collect()
+    for comp in filtered_comps.to_dicts():
+        c_id = comp['id']
+        c_stats = stats_df.filter(pl.col('competition_id') == c_id)
+        c_total = totals_df.filter(pl.col('competition_id') == c_id)
 
-        for comp in filtered_comps.to_dicts():
-            comp_res = results.filter(pl.col('competition_id') == comp['id'])
-            if not comp_res.is_empty():
-                stats = comp_res.group_by('event_id').agg([
-                    pl.col('round_type_id').n_unique().alias('r'),
-                    pl.col('person_id').n_unique().alias('c')
-                ])
+        if not c_stats.is_empty():
+            details = []
+            for s in c_stats.to_dicts():
+                name = EVENT_NAMES.get(s['event_id'], s['event_id'])
+                details.append({'event': name, 'rounds': s['r'], 'count': s['c']})
+                total_rounds += s['r']
+                global_event_counts[name] = global_event_counts.get(name, 0) + s['r']
 
-                details = []
-                for s in stats.to_dicts():
-                    name = EVENT_NAMES.get(s['event_id'], s['event_id'])
-                    details.append({'event': name, 'rounds': s['r'], 'count': s['c']})
-                    total_rounds += s['r']
-                    global_event_counts[name] = global_event_counts.get(name, 0) + s['r']
-
-                report.append({
-                    'name': comp['name'],
-                    'date': f"{comp['year']}-{comp['month']:02d}-{comp['day']:02d}",
-                    'total_competitors': comp_res['person_id'].n_unique(),
-                    'details': details
-                })
+            report.append({
+                'name': comp['name'],
+                'date': f"{comp['year']}-{comp['month']:02d}-{comp['day']:02d}",
+                'total_competitors': c_total['total_c'][0] if not c_total.is_empty() else 0,
+                'details': sorted(details, key=lambda x: x['event'])
+            })
 
     return report, total_rounds, dict(sorted(global_event_counts.items()))
 
