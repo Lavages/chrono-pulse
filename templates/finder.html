@@ -1,149 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark"> <!-- Defaulting to dark for the vibe -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChronoPulse | WCA Metrics</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
-    <!-- Flag Icons Library -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
     
     <script>
         tailwind.config = { 
             darkMode: 'class',
-            theme: { extend: { colors: { midnight: '#070214', surface: '#120826', accent: '#a855f7' } } }
+            theme: { 
+                extend: { 
+                    colors: { 
+                        nebula: '#0d021f', 
+                        surface: '#1a0b2e', 
+                        neonPink: '#ff0055',
+                        neonPurple: '#7000ff',
+                        neonRed: '#ff2a2a'
+                    } 
+                } 
+            } 
         }
-        // Change the flag icon preview when the dropdown changes
         function updateFlagPreview(select) {
             const iso = select.options[select.selectedIndex].getAttribute('data-iso');
             document.getElementById('header-flag').className = `fi fi-${iso} rounded-sm shadow-sm transition-all`;
         }
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
-            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
         }
     </script>
     <style>
         .mono { font-family: 'JetBrains Mono', monospace; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-        select option { background: #120826; color: white; }
+        
+        /* Neon Border Effect */
+        .neon-border {
+            box-shadow: 0 0 10px rgba(112, 0, 255, 0.2);
+            border: 1px solid rgba(255, 0, 85, 0.2);
+        }
+        .dark .neon-border:hover {
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
+            border-color: #ff0055;
+        }
+
+        /* Custom Date Picker Styles */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.5) sepia(1) saturate(5) hue-rotate(300deg);
+            cursor: pointer;
+        }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-midnight text-slate-900 dark:text-slate-100 p-4 md:p-6 min-h-screen">
+<body class="bg-slate-50 dark:bg-nebula text-slate-900 dark:text-slate-100 p-3 md:p-6 min-h-screen transition-colors duration-300">
     <div class="max-w-5xl mx-auto">
         
         <!-- Header & Controls -->
-        <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-            <div class="text-center md:text-left">
-                <h1 class="text-3xl font-extrabold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">ChronoPulse</h1>
-                <p class="text-[10px] font-bold text-slate-400 dark:text-violet-400/40 uppercase tracking-[0.3em]">Competition Analytics</p>
-            </div>
-            
-            <div class="flex items-center gap-2">
-                <form action="/" method="GET" class="bg-white dark:bg-surface border border-slate-200 dark:border-violet-900/30 p-1.5 rounded-2xl flex items-center gap-3 shadow-xl shadow-black/5">
-                    
-                    <!-- Dynamic Flag + Dropdown -->
-                    <div class="flex items-center gap-2 pl-3 pr-2 border-r border-slate-100 dark:border-violet-900/20">
-                        <span id="header-flag" class="fi fi-{{ current_iso }} rounded-sm scale-110"></span>
-                        <select name="country" onchange="updateFlagPreview(this)" class="bg-transparent text-xs font-bold focus:outline-none cursor-pointer pr-2">
-                            {% for c in all_countries %}
-                            <option value="{{ c.id }}" data-iso="{{ c.iso2 }}" {% if c.id == country %}selected{% endif %}>
-                                {{ c.id }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="hidden sm:flex items-center gap-1 px-2">
-                        <input type="date" name="start" value="{{ start }}" class="bg-transparent text-[11px] font-bold focus:outline-none dark:[color-scheme:dark]">
-                        <span class="text-slate-300 dark:text-violet-900 mx-1">/</span>
-                        <input type="date" name="end" value="{{ end }}" class="bg-transparent text-[11px] font-bold focus:outline-none dark:[color-scheme:dark]">
-                    </div>
-                    
-                    <button type="submit" class="bg-violet-600 hover:bg-violet-500 text-white font-bold px-4 py-2 rounded-xl text-[10px] uppercase transition-all shadow-lg shadow-violet-600/30">
-                        Update
-                    </button>
-                </form>
-
-                <button onclick="toggleTheme()" class="p-3 rounded-2xl bg-white dark:bg-surface border border-slate-200 dark:border-violet-900/30 text-violet-500">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+        <header class="flex flex-col gap-6 mb-12">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-4xl font-extrabold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-neonPurple via-neonPink to-neonRed">
+                        ChronoPulse
+                    </h1>
+                    <p class="text-[10px] font-bold text-slate-400 dark:text-neonPink/60 uppercase tracking-[0.4em]">Analytics Engine</p>
+                </div>
+                <button onclick="toggleTheme()" class="p-3 rounded-2xl bg-white dark:bg-surface border border-slate-200 dark:border-neonPurple/30 text-neonPink hover:scale-110 transition-transform">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
                 </button>
             </div>
+            
+            <form action="/" method="GET" class="flex flex-col md:flex-row bg-white dark:bg-surface border border-slate-200 dark:border-neonPurple/20 p-2 rounded-3xl gap-3 shadow-2xl">
+                <!-- Country Select -->
+                <div class="flex items-center gap-3 px-4 py-2 bg-slate-50 dark:bg-nebula/50 rounded-2xl flex-1">
+                    <span id="header-flag" class="fi fi-{{ current_iso }} rounded-sm scale-125"></span>
+                    <select name="country" onchange="updateFlagPreview(this)" class="bg-transparent text-sm font-bold focus:outline-none cursor-pointer w-full">
+                        {% for c in all_countries %}
+                        <option value="{{ c.id }}" data-iso="{{ c.iso2 }}" {% if c.id == country %}selected{% endif %}>{{ c.id }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Date Range -->
+                <div class="flex items-center justify-between gap-2 px-4 py-2 bg-slate-50 dark:bg-nebula/50 rounded-2xl flex-1">
+                    <input type="date" name="start" value="{{ start }}" class="bg-transparent text-xs font-bold focus:outline-none dark:text-white">
+                    <span class="text-neonPink font-black">/</span>
+                    <input type="date" name="end" value="{{ end }}" class="bg-transparent text-xs font-bold focus:outline-none dark:text-white">
+                </div>
+                
+                <button type="submit" class="bg-gradient-to-r from-neonPurple to-neonPink hover:from-neonPink hover:to-neonRed text-white font-black px-8 py-3 rounded-2xl text-xs uppercase transition-all shadow-lg shadow-neonPink/20">
+                    Sync Data
+                </button>
+            </form>
         </header>
 
         <!-- Global Summary -->
         {% if event_summary %}
-        <section class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3 mb-10">
+        <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-12">
             {% for event, rounds in event_summary.items() %}
-            <div class="bg-white dark:bg-surface border border-slate-200 dark:border-violet-900/20 p-4 rounded-2xl shadow-sm">
-                <p class="text-[9px] font-black text-slate-400 dark:text-violet-400/40 uppercase mb-1">{{ event }}</p>
-                <p class="text-xl font-extrabold dark:text-white mono">{{ rounds }}</p>
+            <div class="bg-white dark:bg-surface border border-slate-200 dark:border-neonPurple/20 p-4 rounded-2xl text-center group hover:border-neonPink/50 transition-all">
+                <p class="text-[9px] font-black text-slate-400 dark:text-neonPink/50 uppercase mb-1 tracking-tighter">{{ event }}</p>
+                <p class="text-2xl font-extrabold dark:text-white mono group-hover:scale-110 transition-transform">{{ rounds }}</p>
             </div>
             {% endfor %}
         </section>
         {% endif %}
 
-        <!-- Results List -->
-        <div class="space-y-6">
+        <!-- Competition Results -->
+        <div class="grid grid-cols-1 gap-8">
             {% for comp in comps %}
-            <article class="bg-white dark:bg-surface border border-slate-200 dark:border-violet-900/30 rounded-3xl overflow-hidden shadow-sm hover:border-violet-500/40 transition-all">
-                <div class="px-6 py-4 border-b border-slate-50 dark:border-violet-950/50 flex justify-between items-center bg-slate-50/50 dark:bg-violet-950/10">
-                    <div>
-                        <h3 class="text-sm font-bold dark:text-white">{{ comp.name }}</h3>
-                        <div class="flex items-center gap-2 mt-1">
-                            <span class="fi fi-{{ current_iso }} text-[10px] rounded-xs opacity-70"></span>
-                            <span class="text-[10px] font-bold text-violet-500 uppercase tracking-widest">{{ comp.date }}</span>
+            <article class="bg-white dark:bg-surface border border-slate-200 dark:border-neonPurple/20 rounded-[2rem] overflow-hidden shadow-xl neon-border transition-all">
+                <!-- Header Card -->
+                <div class="p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-gradient-to-r from-slate-50 to-white dark:from-surface dark:to-nebula/30">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="fi fi-{{ current_iso }} rounded-sm opacity-80"></span>
+                            <span class="text-[10px] font-black text-neonPink uppercase tracking-[0.3em]">{{ comp.date }}</span>
                         </div>
+                        <h3 class="text-xl font-extrabold dark:text-white leading-tight">{{ comp.name }}</h3>
                     </div>
-                    <div class="text-right">
-                        <span class="text-2xl font-extrabold mono dark:text-violet-200">{{ comp.total_competitors }}</span>
-                        <p class="text-[8px] font-black text-slate-400 uppercase leading-none mt-1">Attendees</p>
+                    <div class="bg-white dark:bg-nebula p-4 rounded-2xl border border-slate-100 dark:border-neonPurple/30 min-w-[120px] text-center">
+                        <span class="text-3xl font-black mono text-neonPurple dark:text-neonPink">{{ comp.total_competitors }}</span>
+                        <p class="text-[8px] font-black text-slate-400 uppercase mt-1">Participants</p>
                     </div>
                 </div>
-                <div class="p-4">
-                    <!-- Replace your current <table> in the Results List section with this -->
-<table class="w-full">
-    <thead>
-        <tr class="border-b border-slate-50 dark:border-violet-900/10">
-            <th class="py-3 px-2 text-left text-[9px] font-black text-slate-400 dark:text-violet-400/40 uppercase tracking-[0.2em]">Event Name</th>
-            <th class="py-3 text-center text-[9px] font-black text-slate-400 dark:text-violet-400/40 uppercase tracking-[0.2em]">Rounds</th>
-            <th class="py-3 px-2 text-right text-[9px] font-black text-slate-400 dark:text-violet-400/40 uppercase tracking-[0.2em]">Competitors</th>
-        </tr>
-    </thead>
-    <tbody class="divide-y divide-slate-50 dark:divide-violet-900/10">
-        {% for detail in comp.details %}
-        <tr class="group hover:bg-slate-50 dark:hover:bg-violet-900/5 transition-colors">
-            <td class="py-3 px-2 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                {{ detail.event }}
-            </td>
-            <td class="py-3 text-center text-[11px] text-slate-400 mono">
-                {{ detail.rounds }}
-            </td>
-            <td class="py-3 px-2 text-right text-xs font-bold text-violet-600 dark:text-violet-400 mono tracking-tighter">
-                {{ detail.count }}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+
+                <!-- Responsive Table/Card Layout -->
+                <div class="px-6 pb-8">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-[10px] font-black text-slate-400 dark:text-neonPurple/50 uppercase tracking-widest border-b border-slate-100 dark:border-neonPurple/10">
+                                    <th class="py-4 text-left">Event</th>
+                                    <th class="py-4 text-center">Rounds</th>
+                                    <th class="py-4 text-right">Competitors</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-50 dark:divide-neonPurple/5">
+                                {% for detail in comp.details %}
+                                <tr class="group hover:bg-neonPink/[0.02] transition-colors">
+                                    <td class="py-4 text-sm font-bold text-slate-700 dark:text-slate-200">{{ detail.event }}</td>
+                                    <td class="py-4 text-center text-xs mono text-slate-400 dark:text-neonPurple/60">{{ detail.rounds }}</td>
+                                    <td class="py-4 text-right text-sm font-black text-neonPurple dark:text-neonPink mono italic">{{ detail.count }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </article>
             {% endfor %}
         </div>
 
-        <!-- Footer Stats -->
-        <footer class="mt-16 p-8 bg-gradient-to-br from-violet-600 to-fuchsia-700 rounded-[2.5rem] flex justify-between items-center text-white shadow-2xl shadow-violet-600/30">
-            <div>
-                <div class="flex items-center gap-3 mb-2">
-                    <span class="fi fi-{{ current_iso }} rounded-md shadow-lg scale-125"></span>
-                    <h4 class="font-extrabold text-xl tracking-tight">{{ country }}</h4>
+        <!-- Cyber Footer -->
+        <footer class="mt-20 p-10 bg-gradient-to-br from-neonPurple via-neonPink to-neonRed rounded-[3rem] text-white shadow-2xl relative overflow-hidden group">
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+                <div>
+                    <div class="flex items-center justify-center md:justify-start gap-4 mb-4">
+                        <span class="fi fi-{{ current_iso }} rounded-lg shadow-2xl scale-150"></span>
+                        <h4 class="font-extrabold text-3xl tracking-tighter">{{ country }}</h4>
+                    </div>
+                    <p class="text-white/60 text-[10px] font-black uppercase tracking-[0.3em]">Query Window: {{ start }} — {{ end }}</p>
                 </div>
-                <p class="text-violet-100 text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">Database Period: {{ start }} to {{ end }}</p>
-            </div>
-            <div class="text-right">
-                <span class="text-6xl font-extrabold mono tracking-tighter">{{ total_rounds }}</span>
-                <p class="font-black uppercase text-[10px] text-violet-200 mt-2">Total System Rounds</p>
+                <div class="bg-black/20 p-6 rounded-[2rem] backdrop-blur-md border border-white/10">
+                    <span class="text-7xl font-black mono tracking-tighter italic">{{ total_rounds }}</span>
+                    <p class="font-black uppercase text-[10px] text-white/70 mt-2 tracking-widest">Total Cached Rounds</p>
+                </div>
             </div>
         </footer>
     </div>
