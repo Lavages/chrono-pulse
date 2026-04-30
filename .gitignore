@@ -1,0 +1,25 @@
+# Python environment
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# WCA Raw Data (CRITICAL: Do not upload these)
+# These files are several gigabytes and will break Vercel
+data/*.tsv
+data/*.csv
+data/*.zip
+
+# Allow specific small data files if needed
+!data/WCA_export_countries.tsv
+
+# App Cache
+# We WANT to upload the .mp files because they are the 
+# lightweight versions your app uses to run on Vercel.
+# Only ignore them if you plan to generate them during build (not recommended for this setup).
+# cache/ 
+
+# OS specific files
+.DS_Store
+Thumbs.db

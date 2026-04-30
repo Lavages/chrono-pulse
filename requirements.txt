@@ -1,0 +1,4 @@
+flask
+polars
+msgpack
+flask-compress
