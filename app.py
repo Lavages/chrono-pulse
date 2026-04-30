@@ -6,7 +6,7 @@ from flask import Flask, render_template, request
 from flask_compress import Compress
 
 app = Flask(__name__)
-Compress(app) # Compresses HTML output for faster loading
+Compress(app)
 
 # --- CONFIG ---
 DATA_DIR = 'data'
@@ -18,45 +18,28 @@ COMPS_TSV = os.path.join(DATA_DIR, 'WCA_export_competitions.tsv')
 COUNTRIES_TSV = os.path.join(DATA_DIR, 'WCA_export_countries.tsv')
 RESULTS_TSV = os.path.join(DATA_DIR, 'WCA_export_results.tsv')
 
-# Binary Cache Paths
-COMPS_CACHE = os.path.join(CACHE_DIR, 'comps.mp')
-COUNTRIES_CACHE = os.path.join(CACHE_DIR, 'countries.mp')
+# Binary Cache Paths - UPDATED EXTENSIONS
+COMPS_CACHE = os.path.join(CACHE_DIR, 'comps.msgpack')
+COUNTRIES_CACHE = os.path.join(CACHE_DIR, 'countries.msgpack')
 
 EVENT_NAMES = {
-    "333": "3x3 Cube", 
-    "222": "2x2 Cube", 
-    "444": "4x4 Cube", 
-    "555": "5x5 Cube",
-    "666": "6x6 Cube", 
-    "777": "7x7 Cube", 
-    "333oh": "3x3 One-Handed",
-    "333bf": "3x3 Blindfolded", 
-    "333fm": "3x3 Fewest Moves", 
-    "clock": "Clock", 
-    "minx": "Megaminx", 
-    "pyram": "Pyraminx", 
-    "skewb": "Skewb", 
-    "sq1": "Square-1",
-    "444bf": "4x4 Blindfolded",
-    "555bf": "5x5 Blindfolded",
-    "333mbf": "3x3 Multi-Blind",
-    "333ft": "3x3 With Feet",
-    "333mbo": "3x3 Multi-Blind Oldstyle",
-    "magic": "Rubik's Magic",
-    "mmagic": "Master Magic"
+    "333": "3x3 Cube", "222": "2x2 Cube", "444": "4x4 Cube", "555": "5x5 Cube",
+    "666": "6x6 Cube", "777": "7x7 Cube", "333oh": "3x3 One-Handed",
+    "333bf": "3x3 Blindfolded", "333fm": "3x3 Fewest Moves", "clock": "Clock", 
+    "minx": "Megaminx", "pyram": "Pyraminx", "skewb": "Skewb", "sq1": "Square-1",
+    "444bf": "4x4 Blindfolded", "555bf": "5x5 Blindfolded", "333mbf": "3x3 Multi-Blind",
+    "333ft": "3x3 With Feet", "333mbo": "3x3 Multi-Blind Oldstyle",
+    "magic": "Rubik's Magic", "mmagic": "Master Magic"
 }
 
 def pre_cache_data():
     """Converts heavy TSVs to binary MessagePack locally."""
-    # Add quote_char=None here
     if not os.path.exists(COMPS_CACHE) and os.path.exists(COMPS_TSV):
         df = pl.read_csv(COMPS_TSV, separator='\t', quote_char=None, ignore_errors=True)
-        # Drop non-essential columns to stay under Vercel RAM limits
         df = df.select(['id', 'name', 'country_id', 'year', 'month', 'day'])
         with open(COMPS_CACHE, 'wb') as f:
             f.write(msgpack.packb(df.to_dicts()))
 
-    # Add quote_char=None here as well
     if not os.path.exists(COUNTRIES_CACHE) and os.path.exists(COUNTRIES_TSV):
         df = pl.read_csv(COUNTRIES_TSV, separator='\t', quote_char=None, ignore_errors=True)
         df = df.with_columns(pl.col("iso2").str.to_lowercase())
@@ -76,11 +59,9 @@ def get_filtered_data(country, start_date_str, end_date_str):
     except:
         return [], 0, {}
 
-    # Load from binary cache
     comps = pl.DataFrame(load_cache(COMPS_CACHE))
     if comps.is_empty(): return [], 0, {}
 
-    # Filter and Sort
     filtered_comps = comps.filter(
         (pl.col('country_id') == country) &
         (pl.datetime(pl.col('year'), pl.col('month'), pl.col('day')) >= start_dt) &
@@ -89,11 +70,10 @@ def get_filtered_data(country, start_date_str, end_date_str):
 
     if filtered_comps.is_empty(): return [], 0, {}
 
-    # Lazy scan of Results TSV (Only if it exists, otherwise return basic comp data)
     report, total_rounds, global_event_counts = [], 0, {}
     
     if os.path.exists(RESULTS_TSV):
-        results = pl.scan_csv(RESULTS_TSV, separator='\t', ignore_errors=True).filter(
+        results = pl.scan_csv(RESULTS_TSV, separator='\t', quote_char=None, ignore_errors=True).filter(
             pl.col('competition_id').is_in(filtered_comps['id'].to_list())
         ).collect()
 
