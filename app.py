@@ -251,11 +251,25 @@ def finder_page():
     end = request.args.get('end', '2026-12-31')
     
     current_iso = next((c['iso2'] for c in countries if c['id'] == country), 'ph')
+    
+    # data is the list of competitions
     data, total_rounds, event_summary = get_filtered_data(country, start, end)
     
-    return render_template('finder.html', comps=data, total_rounds=total_rounds, 
-                           event_summary=event_summary, country=country, current_iso=current_iso,
-                           start=start, end=end, all_countries=countries)
+    # CRITICAL: Calculate the total number of competitions found
+    count_of_competitions = len(data)
+    
+    return render_template(
+        'finder.html', 
+        comps=data, 
+        total_rounds=total_rounds, 
+        total_comps=count_of_competitions,  # This must match the name in HTML
+        event_summary=event_summary, 
+        country=country, 
+        current_iso=current_iso,
+        start=start, 
+        end=end, 
+        all_countries=countries
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
