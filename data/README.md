@@ -1,7 +1,7 @@
 # World Cube Association – Results Database Export
 
 - Encoding: UTF-8
-- Date: April 30, 2026
+- Date: June  1, 2026
 - Export Format Version: 2.0.2
 - Contact: WCA Results Team (https://www.worldcubeassociation.org/contact?contactRecipient=wrt)
 - Website: https://www.worldcubeassociation.org/export/results
@@ -63,7 +63,7 @@ as users are clearly notified of the following:
 
 > This information is based on competition results owned and maintained by the
 > World Cube Assocation, published at https://worldcubeassociation.org/results
-> as of April 30, 2026.
+> as of June  1, 2026.
 
 ## Acknowledgements
 
@@ -84,7 +84,7 @@ The export contains a `metadata.json` file, with the following fields:
 
 | Field                   | Sample Value              |
 |-------------------------|---------------------------|
-| `export_date`           | `"2026-04-30 00:00:15 UTC"` |
+| `export_date`           | `"2026-06-01 13:04:19 UTC"` |
 | `export_format_version` | `"2.0.2"` |
 
 If you regularly process this export, we recommend that you check the
