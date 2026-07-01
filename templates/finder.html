@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
     
     <script>
-        tailwind.config = { 
+        tailwind.config = {
             darkMode: 'class',
             theme: { 
                 extend: { 
@@ -77,7 +77,8 @@
                     <span id="header-flag" class="fi fi-{{ current_iso }} rounded-sm shadow-sm"></span>
                     <select name="country" onchange="updateFlagPreview(this)" class="bg-transparent text-sm font-semibold focus:outline-none cursor-pointer w-full text-slate-700 dark:text-slate-200">
                         {% for c in all_countries %}
-                        <option value="{{ c.id }}" data-iso="{{ c.iso2 }}" {% if c.id == country %}selected{% endif %}>{{ c.id }}</option>
+                        <option value="{{ c.id }}" data-iso="{{ c.iso2 }}" {% if c.id==country %}selected{% endif %}>{{
+                            c.id }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -184,4 +185,5 @@
         });
     </script>
 </body>
+
 </html>

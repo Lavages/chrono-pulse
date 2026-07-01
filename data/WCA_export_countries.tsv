@@ -1,0 +1,208 @@
+id	iso2	name	continent_id
+Afghanistan	AF	Afghanistan	_Asia
+Albania	AL	Albania	_Europe
+Algeria	DZ	Algeria	_Africa
+Andorra	AD	Andorra	_Europe
+Angola	AO	Angola	_Africa
+Antigua and Barbuda	AG	Antigua and Barbuda	_North America
+Argentina	AR	Argentina	_South America
+Armenia	AM	Armenia	_Europe
+Australia	AU	Australia	_Oceania
+Austria	AT	Austria	_Europe
+Azerbaijan	AZ	Azerbaijan	_Europe
+Bahamas	BS	Bahamas	_North America
+Bahrain	BH	Bahrain	_Asia
+Bangladesh	BD	Bangladesh	_Asia
+Barbados	BB	Barbados	_North America
+Belarus	BY	Belarus	_Europe
+Belgium	BE	Belgium	_Europe
+Belize	BZ	Belize	_North America
+Benin	BJ	Benin	_Africa
+Bhutan	BT	Bhutan	_Asia
+Bolivia	BO	Bolivia	_South America
+Bosnia and Herzegovina	BA	Bosnia and Herzegovina	_Europe
+Botswana	BW	Botswana	_Africa
+Brazil	BR	Brazil	_South America
+Brunei	BN	Brunei	_Asia
+Bulgaria	BG	Bulgaria	_Europe
+Burkina Faso	BF	Burkina Faso	_Africa
+Burundi	BI	Burundi	_Africa
+Cabo Verde	CV	Cabo Verde	_Africa
+Cambodia	KH	Cambodia	_Asia
+Cameroon	CM	Cameroon	_Africa
+Canada	CA	Canada	_North America
+Central African Republic	CF	Central African Republic	_Africa
+Chad	TD	Chad	_Africa
+Chile	CL	Chile	_South America
+China	CN	China	_Asia
+Colombia	CO	Colombia	_South America
+Comoros	KM	Comoros	_Africa
+Congo	CG	Congo	_Africa
+Costa Rica	CR	Costa Rica	_North America
+Cote d_Ivoire	CI	Côte d'Ivoire	_Africa
+Croatia	HR	Croatia	_Europe
+Cuba	CU	Cuba	_North America
+Cyprus	CY	Cyprus	_Europe
+Czech Republic	CZ	Czech Republic	_Europe
+Democratic People_s Republic of Korea	KP	Democratic People's Republic of Korea	_Asia
+Democratic Republic of the Congo	CD	Democratic Republic of the Congo	_Africa
+Denmark	DK	Denmark	_Europe
+Djibouti	DJ	Djibouti	_Africa
+Dominica	DM	Dominica	_North America
+Dominican Republic	DO	Dominican Republic	_North America
+Ecuador	EC	Ecuador	_South America
+Egypt	EG	Egypt	_Africa
+El Salvador	SV	El Salvador	_North America
+Equatorial Guinea	GQ	Equatorial Guinea	_Africa
+Eritrea	ER	Eritrea	_Africa
+Estonia	EE	Estonia	_Europe
+Eswatini	SZ	Eswatini	_Africa
+Ethiopia	ET	Ethiopia	_Africa
+Federated States of Micronesia	FM	Federated States of Micronesia	_Oceania
+Fiji	FJ	Fiji	_Oceania
+Finland	FI	Finland	_Europe
+France	FR	France	_Europe
+Gabon	GA	Gabon	_Africa
+Gambia	GM	Gambia	_Africa
+Georgia	GE	Georgia	_Europe
+Germany	DE	Germany	_Europe
+Ghana	GH	Ghana	_Africa
+Greece	GR	Greece	_Europe
+Grenada	GD	Grenada	_North America
+Guatemala	GT	Guatemala	_North America
+Guinea	GN	Guinea	_Africa
+Guinea Bissau	GW	Guinea Bissau	_Africa
+Guyana	GY	Guyana	_South America
+Haiti	HT	Haiti	_North America
+Honduras	HN	Honduras	_North America
+Hong Kong	HK	Hong Kong, China	_Asia
+Hungary	HU	Hungary	_Europe
+Iceland	IS	Iceland	_Europe
+India	IN	India	_Asia
+Indonesia	ID	Indonesia	_Asia
+Iran	IR	Iran	_Asia
+Iraq	IQ	Iraq	_Asia
+Ireland	IE	Ireland	_Europe
+Israel	IL	Israel	_Europe
+Italy	IT	Italy	_Europe
+Jamaica	JM	Jamaica	_North America
+Japan	JP	Japan	_Asia
+Jordan	JO	Jordan	_Asia
+Kazakhstan	KZ	Kazakhstan	_Asia
+Kenya	KE	Kenya	_Africa
+Kiribati	KI	Kiribati	_Oceania
+Korea	KR	Republic of Korea	_Asia
+Kosovo	XK	Kosovo	_Europe
+Kuwait	KW	Kuwait	_Asia
+Kyrgyzstan	KG	Kyrgyzstan	_Asia
+Laos	LA	Laos	_Asia
+Latvia	LV	Latvia	_Europe
+Lebanon	LB	Lebanon	_Asia
+Lesotho	LS	Lesotho	_Africa
+Liberia	LR	Liberia	_Africa
+Libya	LY	Libya	_Africa
+Liechtenstein	LI	Liechtenstein	_Europe
+Lithuania	LT	Lithuania	_Europe
+Luxembourg	LU	Luxembourg	_Europe
+Macau	MO	Macau, China	_Asia
+Madagascar	MG	Madagascar	_Africa
+Malawi	MW	Malawi	_Africa
+Malaysia	MY	Malaysia	_Asia
+Maldives	MV	Maldives	_Asia
+Mali	ML	Mali	_Africa
+Malta	MT	Malta	_Europe
+Marshall Islands	MH	Marshall Islands	_Oceania
+Mauritania	MR	Mauritania	_Africa
+Mauritius	MU	Mauritius	_Africa
+Mexico	MX	Mexico	_North America
+Moldova	MD	Moldova	_Europe
+Monaco	MC	Monaco	_Europe
+Mongolia	MN	Mongolia	_Asia
+Montenegro	ME	Montenegro	_Europe
+Morocco	MA	Morocco	_Africa
+Mozambique	MZ	Mozambique	_Africa
+Myanmar	MM	Myanmar	_Asia
+Namibia	NA	Namibia	_Africa
+Nauru	NR	Nauru	_Oceania
+Nepal	NP	Nepal	_Asia
+Netherlands	NL	Netherlands	_Europe
+New Zealand	NZ	New Zealand	_Oceania
+Nicaragua	NI	Nicaragua	_North America
+Niger	NE	Niger	_Africa
+Nigeria	NG	Nigeria	_Africa
+North Macedonia	MK	North Macedonia	_Europe
+Norway	NO	Norway	_Europe
+Oman	OM	Oman	_Asia
+Pakistan	PK	Pakistan	_Asia
+Palau	PW	Palau	_Oceania
+Palestine	PS	Palestine	_Asia
+Panama	PA	Panama	_North America
+Papua New Guinea	PG	Papua New Guinea	_Oceania
+Paraguay	PY	Paraguay	_South America
+Peru	PE	Peru	_South America
+Philippines	PH	Philippines	_Asia
+Poland	PL	Poland	_Europe
+Portugal	PT	Portugal	_Europe
+Qatar	QA	Qatar	_Asia
+Romania	RO	Romania	_Europe
+Russia	RU	Russia	_Europe
+Rwanda	RW	Rwanda	_Africa
+Saint Kitts and Nevis	KN	Saint Kitts and Nevis	_North America
+Saint Lucia	LC	Saint Lucia	_North America
+Saint Vincent and the Grenadines	VC	Saint Vincent and the Grenadines	_North America
+Samoa	WS	Samoa	_Oceania
+San Marino	SM	San Marino	_Europe
+Sao Tome and Principe	ST	São Tomé and Príncipe	_Africa
+Saudi Arabia	SA	Saudi Arabia	_Asia
+Senegal	SN	Senegal	_Africa
+Serbia	RS	Serbia	_Europe
+Seychelles	SC	Seychelles	_Africa
+Sierra Leone	SL	Sierra Leone	_Africa
+Singapore	SG	Singapore	_Asia
+Slovakia	SK	Slovakia	_Europe
+Slovenia	SI	Slovenia	_Europe
+Solomon Islands	SB	Solomon Islands	_Oceania
+Somalia	SO	Somalia	_Africa
+South Africa	ZA	South Africa	_Africa
+South Sudan	SS	South Sudan	_Africa
+Spain	ES	Spain	_Europe
+Sri Lanka	LK	Sri Lanka	_Asia
+Sudan	SD	Sudan	_Africa
+Suriname	SR	Suriname	_South America
+Sweden	SE	Sweden	_Europe
+Switzerland	CH	Switzerland	_Europe
+Syria	SY	Syria	_Asia
+Taiwan	TW	Chinese Taipei	_Asia
+Tajikistan	TJ	Tajikistan	_Asia
+Tanzania	TZ	Tanzania	_Africa
+Thailand	TH	Thailand	_Asia
+Timor-Leste	TL	Timor-Leste	_Asia
+Togo	TG	Togo	_Africa
+Tonga	TO	Tonga	_Oceania
+Trinidad and Tobago	TT	Trinidad and Tobago	_North America
+Tunisia	TN	Tunisia	_Africa
+Turkey	TR	Turkey	_Europe
+Turkmenistan	TM	Turkmenistan	_Asia
+Tuvalu	TV	Tuvalu	_Oceania
+Uganda	UG	Uganda	_Africa
+Ukraine	UA	Ukraine	_Europe
+United Arab Emirates	AE	United Arab Emirates	_Asia
+United Kingdom	GB	United Kingdom	_Europe
+Uruguay	UY	Uruguay	_South America
+USA	US	United States	_North America
+Uzbekistan	UZ	Uzbekistan	_Asia
+Vanuatu	VU	Vanuatu	_Oceania
+Vatican City	VA	Vatican City	_Europe
+Venezuela	VE	Venezuela	_South America
+Vietnam	VN	Vietnam	_Asia
+XA	XA	Multiple Countries (Asia)	_Asia
+XE	XE	Multiple Countries (Europe)	_Europe
+XF	XF	Multiple Countries (Africa)	_Africa
+XM	XM	Multiple Countries (Americas)	_Multiple Continents
+XN	XN	Multiple Countries (North America)	_North America
+XO	XO	Multiple Countries (Oceania)	_Oceania
+XS	XS	Multiple Countries (South America)	_South America
+XW	XW	Multiple Countries (World)	_Multiple Continents
+Yemen	YE	Yemen	_Asia
+Zambia	ZM	Zambia	_Africa
+Zimbabwe	ZW	Zimbabwe	_Africa
