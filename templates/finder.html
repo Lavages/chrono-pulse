@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="dark"> <!-- Defaulting to dark for the vibe -->
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChronoPulse | WCA Metrics</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
     
     <script>
@@ -14,18 +14,18 @@
             theme: { 
                 extend: { 
                     colors: { 
-                        nebula: '#0d021f', 
-                        surface: '#1a0b2e', 
-                        neonPink: '#ff0055',
-                        neonPurple: '#7000ff',
-                        neonRed: '#ff2a2a'
+                        nebula: '#090514', 
+                        surface: '#130c24', 
+                        accentViolet: '#a855f7',
+                        accentPink: '#ec4899',
+                        mutedText: '#94a3b8'
                     } 
                 } 
             } 
         }
         function updateFlagPreview(select) {
             const iso = select.options[select.selectedIndex].getAttribute('data-iso');
-            document.getElementById('header-flag').className = `fi fi-${iso} rounded-sm shadow-sm transition-all`;
+            document.getElementById('header-flag').className = `fi fi-${iso} rounded-md shadow-sm transition-all`;
         }
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
@@ -35,112 +35,109 @@
         .mono { font-family: 'JetBrains Mono', monospace; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
         
-        /* Neon Border Effect */
-        .neon-border {
-            box-shadow: 0 0 10px rgba(112, 0, 255, 0.2);
-            border: 1px solid rgba(255, 0, 85, 0.2);
+        /* Premium, softer glow instead of hard neons */
+        .glass-panel {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(148, 163, 184, 0.12);
         }
-        .dark .neon-border:hover {
-            box-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
-            border-color: #ff0055;
+        .dark .glass-panel {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(168, 85, 247, 0.15);
+        }
+        .dark .glass-panel:hover {
+            border-color: rgba(168, 85, 247, 0.35);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.1);
         }
 
-        /* Custom Date Picker Styles */
+        /* Cleaned up native date picker elements */
         input[type="date"]::-webkit-calendar-picker-indicator {
-            filter: invert(0.5) sepia(1) saturate(5) hue-rotate(300deg);
+            filter: invert(0.5) sepia(1) saturate(2) hue-rotate(240deg);
             cursor: pointer;
         }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-nebula text-slate-900 dark:text-slate-100 p-3 md:p-6 min-h-screen transition-colors duration-300">
+<body class="bg-slate-50 dark:bg-nebula text-slate-800 dark:text-slate-100 p-4 md:p-8 min-h-screen transition-colors duration-300">
     <div class="max-w-5xl mx-auto">
         
-        <!-- Header & Controls -->
-        <header class="flex flex-col gap-6 mb-12">
+        <header class="flex flex-col gap-6 mb-10">
             <div class="flex justify-between items-center">
                 <div>
-                    <h1 class="text-4xl font-extrabold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-neonPurple via-neonPink to-neonRed">
+                    <h1 class="text-3xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-accentViolet dark:from-white dark:via-purple-200 dark:to-accentViolet">
                         ChronoPulse
                     </h1>
-                    <p class="text-[10px] font-bold text-slate-400 dark:text-neonPink/60 uppercase tracking-[0.4em]">Analytics Engine</p>
+                    <p class="text-[10px] font-bold text-slate-400 dark:text-accentViolet/80 uppercase tracking-[0.3em] mt-0.5">Analytics Engine</p>
                 </div>
-                <button onclick="toggleTheme()" class="p-3 rounded-2xl bg-white dark:bg-surface border border-slate-200 dark:border-neonPurple/30 text-neonPink hover:scale-110 transition-transform">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-white dark:bg-surface border border-slate-200 dark:border-accentViolet/20 text-slate-600 dark:text-accentViolet hover:bg-slate-100 dark:hover:bg-white/5 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M14 12a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                 </button>
             </div>
             
-            <form action="/" method="GET" class="flex flex-col md:flex-row bg-white dark:bg-surface border border-slate-200 dark:border-neonPurple/20 p-2 rounded-3xl gap-3 shadow-2xl">
-                <!-- Country Select -->
-                <div class="flex items-center gap-3 px-4 py-2 bg-slate-50 dark:bg-nebula/50 rounded-2xl flex-1">
-                    <span id="header-flag" class="fi fi-{{ current_iso }} rounded-sm scale-125"></span>
-                    <select name="country" onchange="updateFlagPreview(this)" class="bg-transparent text-sm font-bold focus:outline-none cursor-pointer w-full">
+            <form action="/" method="GET" class="flex flex-col md:flex-row bg-white dark:bg-surface border border-slate-200 dark:border-accentViolet/10 p-2 rounded-2xl gap-2.5 shadow-xl">
+                <div class="flex items-center gap-3 px-4 py-2.5 bg-slate-50 dark:bg-nebula/40 rounded-xl flex-1 border border-transparent focus-within:border-accentViolet/30">
+                    <span id="header-flag" class="fi fi-{{ current_iso }} rounded-sm shadow-sm"></span>
+                    <select name="country" onchange="updateFlagPreview(this)" class="bg-transparent text-sm font-semibold focus:outline-none cursor-pointer w-full text-slate-700 dark:text-slate-200">
                         {% for c in all_countries %}
                         <option value="{{ c.id }}" data-iso="{{ c.iso2 }}" {% if c.id == country %}selected{% endif %}>{{ c.id }}</option>
                         {% endfor %}
                     </select>
                 </div>
 
-                <!-- Date Range -->
-                <div class="flex items-center justify-between gap-2 px-4 py-2 bg-slate-50 dark:bg-nebula/50 rounded-2xl flex-1">
-                    <input type="date" name="start" value="{{ start }}" class="bg-transparent text-xs font-bold focus:outline-none dark:text-white">
-                    <span class="text-neonPink font-black">/</span>
-                    <input type="date" name="end" value="{{ end }}" class="bg-transparent text-xs font-bold focus:outline-none dark:text-white">
+                <div class="flex items-center justify-between gap-3 px-4 py-2.5 bg-slate-50 dark:bg-nebula/40 rounded-xl flex-1 border border-transparent focus-within:border-accentViolet/30">
+                    <input type="date" name="start" value="{{ start }}" class="bg-transparent text-xs font-medium focus:outline-none text-slate-700 dark:text-slate-200 w-full">
+                    <span class="text-slate-300 dark:text-accentViolet/40 font-light">—</span>
+                    <input type="date" name="end" value="{{ end }}" class="bg-transparent text-xs font-medium focus:outline-none text-slate-700 dark:text-slate-200 w-full text-right">
                 </div>
                 
-                <button type="submit" class="bg-gradient-to-r from-neonPurple to-neonPink hover:from-neonPink hover:to-neonRed text-white font-black px-8 py-3 rounded-2xl text-xs uppercase transition-all shadow-lg shadow-neonPink/20">
+                <button type="submit" class="bg-gradient-to-r from-accentViolet to-accentPink hover:opacity-95 text-white font-bold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition-all shadow-md shadow-accentViolet/10">
                     Sync Data
                 </button>
             </form>
         </header>
 
-        <!-- Global Summary -->
         {% if event_summary %}
-        <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-12">
+        <section class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-10">
             {% for event, rounds in event_summary.items() %}
-            <div class="bg-white dark:bg-surface border border-slate-200 dark:border-neonPurple/20 p-4 rounded-2xl text-center group hover:border-neonPink/50 transition-all">
-                <p class="text-[9px] font-black text-slate-400 dark:text-neonPink/50 uppercase mb-1 tracking-tighter">{{ event }}</p>
-                <p class="text-2xl font-extrabold dark:text-white mono group-hover:scale-110 transition-transform">{{ rounds }}</p>
+            <div class="bg-white dark:bg-surface border border-slate-100 dark:border-accentViolet/10 p-3.5 rounded-xl text-center transition-all hover:translate-y-[-1px]">
+                <p class="text-[10px] font-bold text-slate-400 dark:text-mutedText/60 uppercase mb-1 tracking-wider">{{ event }}</p>
+                <p class="text-xl font-bold dark:text-white mono">{{ rounds }}</p>
             </div>
             {% endfor %}
         </section>
         {% endif %}
 
-        <!-- Competition Results -->
-        <div class="grid grid-cols-1 gap-8">
+        <div class="grid grid-cols-1 gap-6">
             {% for comp in comps %}
-            <article class="bg-white dark:bg-surface border border-slate-200 dark:border-neonPurple/20 rounded-[2rem] overflow-hidden shadow-xl neon-border transition-all">
-                <!-- Header Card -->
-                <div class="p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-gradient-to-r from-slate-50 to-white dark:from-surface dark:to-nebula/30">
+            <article class="bg-white dark:bg-surface rounded-2xl overflow-hidden glass-panel transition-all duration-200">
+                <div class="p-5 md:p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 dark:border-accentViolet/10 bg-slate-50/50 dark:bg-nebula/20">
                     <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="fi fi-{{ current_iso }} rounded-sm opacity-80"></span>
-                            <span class="text-[10px] font-black text-neonPink uppercase tracking-[0.3em]">{{ comp.date }}</span>
+                        <div class="flex items-center gap-2 mb-1.5">
+                            <span class="fi fi-{{ current_iso }} rounded-sm opacity-90 scale-90"></span>
+                            <span class="text-[10px] font-bold text-accentViolet uppercase tracking-wider">{{ comp.date }}</span>
                         </div>
-                        <h3 class="text-xl font-extrabold dark:text-white leading-tight">{{ comp.name }}</h3>
+                        <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100 leading-tight tracking-tight">{{ comp.name }}</h3>
                     </div>
-                    <div class="bg-white dark:bg-nebula p-4 rounded-2xl border border-slate-100 dark:border-neonPurple/30 min-w-[120px] text-center">
-                        <span class="text-3xl font-black mono text-neonPurple dark:text-neonPink">{{ comp.total_competitors }}</span>
-                        <p class="text-[8px] font-black text-slate-400 uppercase mt-1">Participants</p>
+                    <div class="bg-white dark:bg-surface/60 px-4 py-2 rounded-xl border border-slate-100 dark:border-accentViolet/20 min-w-[100px] text-center sm:text-right">
+                        <span class="text-xl font-bold mono text-accentViolet">{{ comp.total_competitors }}</span>
+                        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wide">Competitors</p>
                     </div>
                 </div>
 
-                <!-- Responsive Table/Card Layout -->
-                <div class="px-6 pb-8">
+                <div class="px-6 pb-4">
                     <div class="overflow-x-auto">
-                        <table class="w-full">
+                        <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="text-[10px] font-black text-slate-400 dark:text-neonPurple/50 uppercase tracking-widest border-b border-slate-100 dark:border-neonPurple/10">
-                                    <th class="py-4 text-left">Event</th>
-                                    <th class="py-4 text-center">Rounds</th>
-                                    <th class="py-4 text-right">Competitors</th>
+                                <tr class="text-[10px] font-bold text-slate-400 dark:text-mutedText/50 uppercase tracking-wider border-b border-slate-100 dark:border-accentViolet/5">
+                                    <th class="py-3 font-medium">Event</th>
+                                    <th class="py-3 text-center font-medium">Rounds</th>
+                                    <th class="py-3 text-right font-medium">Competitors</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-50 dark:divide-neonPurple/5">
+                            <tbody class="divide-y divide-slate-100/50 dark:divide-accentViolet/5">
                                 {% for detail in comp.details %}
-                                <tr class="group hover:bg-neonPink/[0.02] transition-colors">
-                                    <td class="py-4 text-sm font-bold text-slate-700 dark:text-slate-200">{{ detail.event }}</td>
-                                    <td class="py-4 text-center text-xs mono text-slate-400 dark:text-neonPurple/60">{{ detail.rounds }}</td>
-                                    <td class="py-4 text-right text-sm font-black text-neonPurple dark:text-neonPink mono italic">{{ detail.count }}</td>
+                                <tr class="group hover:bg-slate-50/50 dark:hover:bg-accentViolet/[0.02] transition-colors">
+                                    <td class="py-3 text-xs font-semibold text-slate-700 dark:text-slate-300">{{ detail.event }}</td>
+                                    <td class="py-3 text-center text-xs mono text-slate-400 dark:text-mutedText/60">{{ detail.rounds }}</td>
+                                    <td class="py-3 text-right text-xs font-bold text-slate-800 dark:text-slate-200 mono">{{ detail.count }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -151,23 +148,40 @@
             {% endfor %}
         </div>
 
-        <!-- Cyber Footer -->
-        <footer class="mt-20 p-10 bg-gradient-to-br from-neonPurple via-neonPink to-neonRed rounded-[3rem] text-white shadow-2xl relative overflow-hidden group">
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-            <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+        <footer class="mt-16 p-8 bg-gradient-to-br from-surface to-nebula border border-slate-200 dark:border-accentViolet/10 rounded-2xl dark:text-white shadow-xl relative overflow-hidden">
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
                 <div>
-                    <div class="flex items-center justify-center md:justify-start gap-4 mb-4">
-                        <span class="fi fi-{{ current_iso }} rounded-lg shadow-2xl scale-150"></span>
-                        <h4 class="font-extrabold text-3xl tracking-tighter">{{ country }}</h4>
+                    <div class="flex items-center justify-center md:justify-start gap-3 mb-2">
+                        <span class="fi fi-{{ current_iso }} rounded shadow-sm scale-110"></span>
+                        <h4 class="font-bold text-xl tracking-tight text-slate-800 dark:text-white">{{ country }}</h4>
                     </div>
-                    <p class="text-white/60 text-[10px] font-black uppercase tracking-[0.3em]">Query Window: {{ start }} — {{ end }}</p>
+                    <p class="text-slate-400 dark:text-mutedText/60 text-[10px] font-bold uppercase tracking-wider">Query Window: {{ start }} — {{ end }}</p>
                 </div>
-                <div class="bg-black/20 p-6 rounded-[2rem] backdrop-blur-md border border-white/10">
-                    <span class="text-7xl font-black mono tracking-tighter italic">{{ total_rounds }}</span>
-                    <p class="font-black uppercase text-[10px] text-white/70 mt-2 tracking-widest">Total Cached Rounds</p>
+                
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="bg-slate-100 dark:bg-white/5 px-6 py-3 rounded-xl border border-slate-200/50 dark:border-white/5 text-center min-w-[140px]">
+                        <span class="text-4xl font-bold mono tracking-tight text-accentViolet">{{ total_rounds }}</span>
+                        <p class="font-bold uppercase text-[9px] text-slate-400 dark:text-mutedText/70 mt-0.5 tracking-wider">Cached Rounds</p>
+                    </div>
                 </div>
+            </div>
+            
+            <div class="mt-8 pt-4 border-t border-slate-100 dark:border-white/5 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-medium text-slate-400 dark:text-mutedText/40">
+                <p>&copy; ChronoPulse Analytics Ecosystem</p>
+                <p class="flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Last updated: <span id="current-date" class="font-bold text-slate-500 dark:text-mutedText/70"></span>
+                </p>
             </div>
         </footer>
     </div>
+
+    <script>
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString(undefined, { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+    </script>
 </body>
 </html>
